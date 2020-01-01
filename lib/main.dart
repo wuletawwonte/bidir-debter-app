@@ -53,9 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: new Center(
-        child: new Text('Loading ...'),
+        child: new Text(''),
       ),
     );
   }

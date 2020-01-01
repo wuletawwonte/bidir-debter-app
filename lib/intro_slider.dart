@@ -1,16 +1,75 @@
 
 import 'package:flutter/material.dart';
+import 'package:intro_views_flutter/Models/page_view_model.dart';
+import 'package:intro_views_flutter/intro_views_flutter.dart';
+
+import 'home_page.dart';
 
 class IntroSlider extends StatelessWidget {
+
+  final pages = [
+    PageViewModel(
+      pageColor: Colors.amber,
+      body: Text(
+        'Welcome to the Bidir and Load management application'
+      ),
+      title: Text(
+        'Welcome'
+      ),
+      textStyle: TextStyle(color: Colors.white),
+      mainImage: Image.asset(
+        'assets/banner1.jpg',
+        height: 285.0,
+        width: 285.0,
+        alignment: Alignment.center
+      )
+    ),
+    PageViewModel(
+      pageColor: Colors.orange,
+      body: Text(
+        'Wonderfull app for shop keepers'
+      ),
+      title: Text(
+        'Shop Keepers'
+      ),
+      textStyle: TextStyle(color: Colors.white),
+      mainImage: Image.asset(
+        'assets/banner2.jpg',
+        height: 285.0,
+        width: 285.0,
+        alignment: Alignment.center
+      )
+    ),
+    PageViewModel(
+      pageColor: Colors.purple,
+      body: Text(
+        'It is a must for mini libraries app for shop keepers'
+      ),
+      title: Text(
+        'Mini Libraries'
+      ),
+      textStyle: TextStyle(color: Colors.white),
+      mainImage: Image.asset(
+        'assets/banner3.jpg',
+        height: 285.0,
+        width: 285.0,
+        alignment: Alignment.center
+      )
+    ),
+
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
-      appBar: AppBar(
-        title: Text('Bidir Debter'),
+    return Builder(
+      builder: (context) => IntroViewsFlutter(
+        pages,
+        onTapDoneButton: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => HomePage()
+          ));
+        }
       ),
-      body: Center(
-        child: Text('Intro Slider')
-      )
     );
   }
 }
