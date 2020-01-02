@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_page.dart';
+import 'signup_page.dart';
 import 'intro_slider.dart';
 
 void main() => runApp(MyApp());
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     bool _seen = (prefs.getBool('seen')?? false);
     
     if(_seen) {
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new HomePage()));
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new SignupPage()));
     }
     else {
       await prefs.setBool('seen', true);
