@@ -16,63 +16,92 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     dbHelper = new DBHelper();
-    getPersons();
   }
 
-  getPersons() {
+  Future<List<Person>> getPersons() {
     setState(() {
       persons = dbHelper.getPersons();
     });
+    return persons;
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+                  title: new Text('Are you sure?'),
+                  content: Text('Do you want to exit an app?'),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
+                    ),
+                    new FlatButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: Text('Yes'))
+                  ],
+                ))) ??
+        false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          title: Text('Home page')),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverFillRemaining(
-              child: FutureBuilder(
-                  future: persons,
-                  builder: (context, snapshot) {
-                    if (snapshot.data == null) {
-                      return Center(child: Text("No Record Found"));
-                    } else {
-                      return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              onLongPress: (){},
-                              onTap: (){},
-                              leading: CircleAvatar(
-                                backgroundColor: Color(snapshot.data[index].profileColor),
-                                child: Text(snapshot.data[index].firstName[0])
-                              ),
-                              title: Text(snapshot.data[index].firstName),
-                              subtitle: Text(snapshot.data[index].lastName),
-                              trailing: IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  dbHelper.delete(snapshot.data.id);
-                                },
-                              ),
-                            );
-                          });
-                    }
-                  }))
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddPerson()));
-        },
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {},
+            ),
+            title: Text('Home page')),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverFillRemaining(
+                child: FutureBuilder(
+                    future: getPersons(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(child: Text("No Record Found"));
+                      } else {
+                        return RefreshIndicator(
+                          onRefresh: () {
+                            return getPersons();
+                          },
+                          child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onLongPress: () {},
+                                  onTap: () {},
+                                  leading: CircleAvatar(
+                                      backgroundColor: Color(
+                                          snapshot.data[index].profileColor),
+                                      child: Text(
+                                          snapshot.data[index].firstName[0])),
+                                  title: Text(snapshot.data[index].firstName),
+                                  subtitle: Text(snapshot.data[index].lastName),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      dbHelper.delete(snapshot.data[index].id);
+                                    },
+                                  ),
+                                );
+                              }),
+                        );
+                      }
+                    }))
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddPerson()));
+          },
+        ),
       ),
     );
   }
