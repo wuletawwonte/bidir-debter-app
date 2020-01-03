@@ -11,6 +11,7 @@ class DBHelper {
   static const String ID = 'id';
   static const String FIRST_NAME = 'first_name';
   static const String LAST_NAME = 'last_name';
+  static const String PROFILE_COLOR = 'profile_color';
   static const String TABLE = 'person';
   static const String DB_NAME = 'bidir.db';
 
@@ -31,7 +32,7 @@ class DBHelper {
 
   _onCreate(Database db, int version) async{
     await db
-      .execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $FIRST_NAME TEXT, $LAST_NAME TEXT)");
+      .execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $FIRST_NAME TEXT, $LAST_NAME TEXT, $PROFILE_COLOR INTEGER)");
   }
 
   Future<Person> save(Person person) async{
@@ -42,7 +43,7 @@ class DBHelper {
 
   Future<List<Person>> getPersons() async{
     var dbClient = await db; 
-    List<Map> maps = await dbClient.query(TABLE, columns: [ID, FIRST_NAME, LAST_NAME]);
+    List<Map> maps = await dbClient.query(TABLE, columns: [ID, FIRST_NAME, LAST_NAME, PROFILE_COLOR]);
   
     List<Person> persons = [];
     if(maps.length > 0) {

@@ -3,14 +3,16 @@ class Person  {
   int id;
   String firstName;
   String lastName;
+  int profileColor;
 
-  Person(this.id, this.firstName, this.lastName);
+  Person(this.id, this.firstName, this.lastName, this.profileColor);
   
   Map<String, dynamic> toMap() {
     var map = <String, dynamic> {
       'id': id,
       'first_name': firstName,
-      'last_name': lastName
+      'last_name': lastName,
+      'profile_color': profileColor
     };
 
     return map;
@@ -20,6 +22,7 @@ class Person  {
     id = map['id'];
     firstName = map['first_name'];
     lastName = map['last_name'];
+    profileColor = map['profile_color'];
   }
 
 }

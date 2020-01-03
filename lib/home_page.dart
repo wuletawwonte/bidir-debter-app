@@ -41,19 +41,20 @@ class _HomePageState extends State<HomePage> {
                   future: persons,
                   builder: (context, snapshot) {
                     if (snapshot.data == null) {
-                      return new Container(
-                          child: Center(child: Text("No Record Found")));
+                      return Center(child: Text("No Record Found"));
                     } else {
                       return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              onTap: () {},
-                              leading: Icon(Icons.add_shopping_cart),
-                              title:
-                                  Text(snapshot.data[index].firstName),
-                              subtitle:
-                                  Text(snapshot.data[index].lastName),
+                              onLongPress: (){},
+                              onTap: (){},
+                              leading: CircleAvatar(
+                                backgroundColor: Color(snapshot.data[index].profileColor),
+                                child: Text(snapshot.data[index].firstName[0])
+                              ),
+                              title: Text(snapshot.data[index].firstName),
+                              subtitle: Text(snapshot.data[index].lastName),
                               trailing: IconButton(
                                 icon: Icon(Icons.delete),
                                 onPressed: () {

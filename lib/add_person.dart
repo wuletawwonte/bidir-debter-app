@@ -3,6 +3,8 @@ import 'sqflite/person.dart';
 import 'sqflite/db_helper.dart';
 import 'home_page.dart';
 
+import 'package:random_color/random_color.dart';
+
 class AddPerson extends StatefulWidget {
   @override
   _AddPersonState createState() => _AddPersonState();
@@ -57,8 +59,13 @@ class _AddPersonState extends State<AddPerson> {
               onPressed: () {
                 if (key.currentState.validate()) {
                   key.currentState.save();
+
+                  RandomColor profileColor = RandomColor();                   
+                  Color _color = profileColor.randomColor(colorHue: ColorHue.orange, colorSaturation: ColorSaturation.highSaturation);
+                  int clr = _color.value;
+
                   Person person = Person(null, _firstNameController.text,
-                      _lastNameController.text);
+                      _lastNameController.text, clr);
                   dbHelper.save(person);
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (context) => new HomePage()));
