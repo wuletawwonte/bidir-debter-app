@@ -1,8 +1,9 @@
+import 'package:bidir_debter/home_page.dart';
+import 'package:bidir_debter/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'signup_page.dart';
 import 'intro_slider.dart';
 
 void main() => runApp(MyApp());
@@ -40,14 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future checkFirstScreen()  async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen')?? false);
+    int _seen = (prefs.getInt('seen') ?? 0);
     
-    if(_seen) {
+    if(_seen == 0) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new IntroSlider()));
+    }
+    else if(_seen == 1) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new SignupPage()));
     }
-    else {
-      await prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new IntroSlider()));
+    else if(_seen == 2) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new HomePage()));
     }
   }
 

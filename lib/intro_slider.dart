@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_page.dart';
+import 'signup_page.dart';
 
 class IntroSlider extends StatelessWidget {
 
@@ -34,7 +35,7 @@ class IntroSlider extends StatelessWidget {
       ),
       textStyle: TextStyle(color: Colors.white),
       mainImage: Image.asset(
-        'assets/banner2.jpg',
+        'assets/banner2.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center
@@ -50,7 +51,7 @@ class IntroSlider extends StatelessWidget {
       ),
       textStyle: TextStyle(color: Colors.white),
       mainImage: Image.asset(
-        'assets/banner3.jpg',
+        'assets/banner3.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center
@@ -64,9 +65,11 @@ class IntroSlider extends StatelessWidget {
     return Builder(
       builder: (context) => IntroViewsFlutter(
         pages,
-        onTapDoneButton: () {
+        onTapDoneButton: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setInt('seen', 1);
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => HomePage()
+            builder: (context) => SignupPage()
           ));
         }
       ),
