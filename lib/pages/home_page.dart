@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'sqflite/person.dart';
-import 'sqflite/db_helper.dart';
+import 'package:bidir_debter/sqflite/person.dart';
+import 'package:bidir_debter/sqflite/db_helper.dart';
 import 'add_person.dart';
 
 class HomePage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                                       backgroundColor: Color(
                                           snapshot.data[index].profileColor),
                                       child: Text(
-                                          snapshot.data[index].firstName[0])),
+                                          snapshot.data[index].firstName[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold),)),
                                   title: Text(snapshot.data[index].firstName),
                                   subtitle: Text(snapshot.data[index].lastName),
                                   trailing: IconButton(

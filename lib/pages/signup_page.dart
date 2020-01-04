@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'animation/fade_animation.dart';
+import 'package:bidir_debter/animation/fade_animation.dart';
 import 'home_page.dart';
 
 class SignupPage extends StatefulWidget {
