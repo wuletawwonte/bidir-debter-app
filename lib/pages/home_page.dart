@@ -50,12 +50,17 @@ class _HomePageState extends State<HomePage> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
+            // elevation: 0.0,
             leading: IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {},
             ),
-            title: Text('Home page')),
-        body: CustomScrollView(
+            title: Text('Bidir App'),
+            actions: <Widget>[
+              IconButton(icon: Icon(Icons.more_vert),onPressed: (){},)
+            ],  
+          ),
+        body: CustomScrollView(          
           slivers: <Widget>[
             SliverFillRemaining(
                 child: FutureBuilder(
@@ -79,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                                       backgroundColor: Color(
                                           snapshot.data[index].profileColor),
                                       child: Text(
-                                          snapshot.data[index].firstName[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold),)),
+                                          snapshot.data[index].firstName[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)),
                                   title: Text(snapshot.data[index].firstName),
                                   subtitle: Text(snapshot.data[index].lastName),
                                   trailing: IconButton(
@@ -96,6 +101,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          tooltip: 'Add Person',
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(

@@ -16,172 +16,195 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordFieldController = TextEditingController();
   final _usernameFieldController = TextEditingController();
 
+  bool _passwordObscure;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordObscure = true;
+  }
+
+  Widget signupForm() {
+    return Container(
+      height: 460,
+      padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+      ),
+      child: Column(
+        children: <Widget>[
+          Form(
+            key: _formKey,
+            child: Expanded(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 10,),
+                  FadeAnimation(0.3, Center(child: Text("Welcome To Bidir app", style: TextStyle(color: Colors.black54, fontSize: 22, fontWeight: FontWeight.bold),))),
+                  SizedBox(height: 10,),
+                  FadeAnimation(0.3, Center(child: Text("Please fill the form below", style: TextStyle(color: Colors.grey),)),),
+                  SizedBox(height: 10,),
+                  FadeAnimation(
+                      0.4,
+                      TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        controller: _usernameFieldController,
+                        enableInteractiveSelection: false,
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "You cant have empty Name Field";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          labelText: 'Name',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FadeAnimation(
+                      0.5,
+                      TextFormField(
+                        obscureText: _passwordObscure,
+                        controller: _passwordFieldController,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "You cant have empty Password Field";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(_passwordObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordObscure = !_passwordObscure;
+                                });
+                              },
+                            )),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  FadeAnimation(
+                      0.5,
+                      TextFormField(
+                          obscureText: _passwordObscure,
+                          validator: (value) {
+                            if (value != _passwordFieldController.text) {
+                              return 'Retype Password';
+                            }
+                            if (value.isEmpty) {
+                              return 'Please confirm your password';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              labelText: 'Confirm Password',
+                              labelStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              ))),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    child: FadeAnimation(
+                        0.6,
+                        FlatButton(
+                          child: Text(
+                            'Signup',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          color: Colors.orange,
+                          textColor: Colors.white,
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString(
+                                  'username', _usernameFieldController.text);
+                              await prefs.setString(
+                                  'password', _passwordFieldController.text);
+                              await prefs.setInt('seen', 2);
+                              Navigator.of(context).pushReplacement(
+                                  new MaterialPageRoute(
+                                      builder: (context) => new HomePage()));
+                            }
+                          },
+                        )),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
           child: Container(
-            color: Colors.grey[80],
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Stack(children: <Widget>[
                   Container(
-                    height: 230,
+                    height: 300,
                     decoration: BoxDecoration(
-                      // borderRadius:
-                      //     BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
-                      color: Colors.yellowAccent,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    widthFactor: 0.6,
-                    heightFactor: 0.6,
-                    child: Material(
-                      borderRadius: BorderRadius.all(Radius.circular(200)),
-                      color: Colors.yellow[500],
-                      child: Container(
-                        width: 300,
-                        height: 300,
-                      ),
+                      color: Colors.deepPurple,
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(45, 100, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
                     child: FadeAnimation(
                         0.3,
-                        Text(
-                          'Signup',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 70,
-                              fontWeight: FontWeight.bold),
-                        )),
+                        Column(
+                          children: <Widget>[
+                            Center(child: Icon(Icons.map, size: 100,color: Colors.white70,)),
+                            Center(child: Text("Bidir App", style: TextStyle(color: Colors.white70, fontSize: 30,fontStyle: FontStyle.italic, fontWeight: FontWeight.bold))),
+                          ],
+                        )
+                        ),
                   ),
-                ]),
-                Container(
-                    padding: EdgeInsets.only(top: 30, left: 25, right: 25),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
+                  Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        children: <Widget>[
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                FadeAnimation(
-                                    0.4,
-                                    TextFormField(
-                                        controller: _usernameFieldController,
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return "You cant have empty Name Field";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            labelText: 'Name',
-                                            labelStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.yellow))))),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                FadeAnimation(
-                                    0.5,
-                                    TextFormField(
-                                        obscureText: true,
-                                        controller: _passwordFieldController,
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return "You cant have empty Password Field";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            labelText: 'Password',
-                                            labelStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.yellow))))),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                FadeAnimation(
-                                    0.5,
-                                    TextFormField(
-                                        obscureText: true,
-                                        validator: (value) {
-                                          if (value !=
-                                              _passwordFieldController.text) {
-                                            return 'Retype Password';
-                                          }
-                                          if (value.isEmpty) {
-                                            return 'Please confirm your password';
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            labelText: 'Confirm Password',
-                                            labelStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey,
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.yellow))))),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    )),
-                Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(30),
-                  child: FadeAnimation(
-                      0.6,
-                      RaisedButton(
-                        child: Text('Signup', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),  
-                        color: Colors.orange,  
-                        textColor: Colors.white,                    
-                        onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    await prefs.setString(
-                                        'username', _usernameFieldController.text);
-                                    await prefs.setString(
-                                        'password', _passwordFieldController.text);
-                                    await prefs.setInt('seen', 2);
-                                    Navigator.of(context).pushReplacement(
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new HomePage()));
-                                  }
-                                },
-                      )),
-                )
+                      padding: EdgeInsets.fromLTRB(18, 230, 18, 0),
+                      child: signupForm()),
+                ]),
               ],
             ),
           ),

@@ -32,10 +32,11 @@ class _AddPersonState extends State<AddPerson> {
           child: Column(
             children: <Widget>[              
               TextFormField(
+                textCapitalization: TextCapitalization.words,
                 controller: _firstNameController,
                 // maxLength: 40,
                 enableInteractiveSelection: false,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   fillColor: Colors.black,
                   border: OutlineInputBorder(
@@ -62,10 +63,10 @@ class _AddPersonState extends State<AddPerson> {
               ),
               SizedBox(height: 20,),
               TextFormField(
+                textCapitalization: TextCapitalization.words,
                 controller: _lastNameController,
-                // maxLength: 40,
                 enableInteractiveSelection: false,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   fillColor: Colors.black,
                   border: OutlineInputBorder(
