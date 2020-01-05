@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bidir_debter/pages/home_page.dart';
 import 'package:bidir_debter/pages/intro_slider.dart';
 import 'package:bidir_debter/pages/signup_page.dart';
+import 'package:bidir_debter/pages/login_page.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -48,6 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     else if(_seen == 2) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new HomePage()));
+    }
+    else if(_seen == 3) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new LoginPage()));
     }
   }
 

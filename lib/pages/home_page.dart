@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
 import 'add_person.dart';
+import 'package:bidir_debter/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,23 +47,55 @@ class _HomePageState extends State<HomePage> {
         false;
   }
 
+  Widget popupMenu() {
+    return PopupMenuButton(
+      icon: Icon(Icons.more_vert),
+      onSelected: (value) async {
+        if (value == 'profile') {
+          print('Profile');
+        } else if (value == 'settings') {
+          print('Settings');
+        } else if (value == 'signout')  {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setInt('seen', 3);
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => new LoginPage()));
+        }
+      },
+      itemBuilder: (context) {
+        return <PopupMenuEntry<String>>[
+          PopupMenuItem(
+            value: "profile",
+            child: Text("Profile"),
+          ),
+          PopupMenuItem(value: 'settings', child: Text("Settings")),
+          PopupMenuItem(value: 'signout', child: Text('Signout'))
+        ];
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-            // elevation: 0.0,
-            leading: IconButton(
-              icon: Icon(Icons.menu),
+          // elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {},
+          ),
+          title: Text('Bidir App'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
               onPressed: () {},
             ),
-            title: Text('Bidir App'),
-            actions: <Widget>[
-              IconButton(icon: Icon(Icons.more_vert),onPressed: (){},)
-            ],  
-          ),
-        body: CustomScrollView(          
+            popupMenu(),
+          ],
+        ),
+        body: CustomScrollView(
           slivers: <Widget>[
             SliverFillRemaining(
                 child: FutureBuilder(
@@ -84,7 +119,12 @@ class _HomePageState extends State<HomePage> {
                                       backgroundColor: Color(
                                           snapshot.data[index].profileColor),
                                       child: Text(
-                                          snapshot.data[index].firstName[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)),
+                                        snapshot.data[index].firstName[0]
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      )),
                                   title: Text(snapshot.data[index].firstName),
                                   subtitle: Text(snapshot.data[index].lastName),
                                   trailing: IconButton(
