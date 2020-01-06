@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+// import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
-import 'add_person.dart';
+// import 'add_person.dart';
 import 'package:bidir_debter/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<List<Person>> persons;
+  final _searchFieldController = TextEditingController();
   var dbHelper;
+
+  List<TabItem> items = <TabItem>[
+    TabItem(icon: Icons.home, title: 'Home'),
+    TabItem(icon: Icons.data_usage, title: 'Orange'),
+    TabItem(icon: Icons.date_range, title: 'Callendar'),
+    TabItem(icon: Icons.supervised_user_circle, title: 'Users'),
+    TabItem(icon: Icons.swap_calls, title: 'Zigzag'),
+  ];
 
   @override
   void initState() {
@@ -49,13 +60,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget popupMenu() {
     return PopupMenuButton(
-      icon: Icon(Icons.more_vert),
+      icon: Icon(Icons.more_vert, size: 20),
       onSelected: (value) async {
         if (value == 'profile') {
           print('Profile');
         } else if (value == 'settings') {
           print('Settings');
-        } else if (value == 'signout')  {
+        } else if (value == 'signout') {
           final prefs = await SharedPreferences.getInstance();
           prefs.setInt('seen', 3);
           Navigator.of(context).pushReplacement(
@@ -77,24 +88,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          // elevation: 0.0,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          title: Text('Bidir App'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.light,
+          title: Container(
+            height: 48,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 0.5,
+                  color: Colors.grey,
+                )
+              ]
             ),
-            popupMenu(),
-          ],
+            child: TextField(
+              textCapitalization: TextCapitalization.words,
+              controller: _searchFieldController,
+              enableInteractiveSelection: false,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelStyle: TextStyle(fontSize: 20),                
+                hoverColor: Colors.purple,
+                fillColor: Colors.purple,
+                prefixIcon: Icon(Icons.menu, size: 20,),
+                suffixIcon: popupMenu(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                labelText: 'Bidir Debter',
+                hasFloatingPlaceholder: false,
+                isDense: true,
+              ),
+            ),
+          ),
         ),
+
         body: CustomScrollView(
           slivers: <Widget>[
             SliverFillRemaining(
@@ -140,14 +177,70 @@ class _HomePageState extends State<HomePage> {
                     }))
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'Add Person',
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddPerson()));
-          },
+        // floatingActionButton: FloatingActionButton(
+        //   tooltip: 'Add Person',
+        //   child: Icon(Icons.add),
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => AddPerson()));
+        //   },
+        // ),
+        bottomNavigationBar: ConvexAppBar.builder(
+          count: items.length,
+          backgroundColor: Colors.white,
+          style: TabStyle.fixed,
+          builder: _CustomTabsBuilder(items),
         ),
+      ),
+    );
+  }
+}
+
+class _CustomTabsBuilder extends DelegateBuilder {
+  final List<TabItem> items;
+
+  _CustomTabsBuilder(this.items);
+
+  @override
+  Widget build(BuildContext context, int index, bool active) {
+    var navigationItem = items[index];
+    // var _color = active ? Colors.purple : Colors.white60;
+    // var _color2 = active ? Colors.white : Colors.black;
+
+    // if (index == items.length ~/ 2) {
+    //   return Stack(
+    //     alignment: Alignment.center,
+    //     children: <Widget>[
+    //       SizedBox(
+    //         width: 60,
+    //         height: 60,
+    //         child: Container(
+    //             decoration: BoxDecoration(
+    //               shape: BoxShape.circle,
+    //               color: _color,
+    //             ),
+    //             child: Icon(Icons.add, size: 40, color: _color2)),
+    //       )
+    //     ],
+    //   );
+    // }
+
+    var _icon = active
+        ? navigationItem.activeIcon ?? navigationItem.icon
+        : navigationItem.icon;
+
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.only(bottom: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Icon(_icon, color: Colors.black87),
+          Text(
+            navigationItem.title,
+            style: TextStyle(color: Colors.black87),
+          )
+        ],
       ),
     );
   }
