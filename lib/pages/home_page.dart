@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget popupMenu() {
     return PopupMenuButton(
-      icon: Icon(Icons.more_vert, size: 20),
+      icon: Icon(Icons.more_vert, color: Colors.black54, size: 20),
       onSelected: (value) async {
         if (value == 'profile') {
           print('Profile');
@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -101,34 +100,39 @@ class _HomePageState extends State<HomePage> {
           title: Container(
             height: 48,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 0.5,
-                  color: Colors.grey,
-                )
-              ]
-            ),
-            child: TextField(
-              textCapitalization: TextCapitalization.words,
-              controller: _searchFieldController,
-              enableInteractiveSelection: false,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelStyle: TextStyle(fontSize: 20),                
-                hoverColor: Colors.purple,
-                fillColor: Colors.purple,
-                prefixIcon: Icon(Icons.menu, size: 20,),
-                suffixIcon: popupMenu(),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 0.5,
+                    color: Colors.grey,
+                  )
+                ]),
+            child: Stack(alignment: Alignment.centerRight, children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(right: 50),
+                child: TextField(
+                  textCapitalization: TextCapitalization.words,
+                  controller: _searchFieldController,
+                  enableInteractiveSelection: false,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelStyle: TextStyle(fontSize: 20),
+                      hoverColor: Colors.deepPurple,
+                      fillColor: Colors.purple,
+                      prefixIcon: Icon(
+                        Icons.menu,
+                        size: 20,
+                      ),
+                      labelText: 'Bidir Debter',
+                      hasFloatingPlaceholder: false,
+                      isDense: true,
+                      contentPadding: EdgeInsets.fromLTRB(0, 19, 50, 18.8)),
                 ),
-                labelText: 'Bidir Debter',
-                hasFloatingPlaceholder: false,
-                isDense: true,
               ),
-            ),
+              popupMenu()
+            ]),
           ),
         ),
 
