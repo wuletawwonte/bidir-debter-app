@@ -4,6 +4,7 @@ import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bidir_debter/pages/login_page.dart';
+import 'package:bidir_debter/pages/edit_profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,7 +34,8 @@ class _HomePageState extends State<HomePage> {
       icon: Icon(Icons.more_vert, color: Colors.black54, size: 20),
       onSelected: (value) async {
         if (value == 'profile') {
-          print('Profile');
+          Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) => new EditProfilePage()));
         } else if (value == 'settings') {
           print('Settings');
         } else if (value == 'signout') {
