@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bidir_debter/pages/home_page.dart';
+import 'package:bidir_debter/template.dart';
 import 'package:bidir_debter/pages/intro_slider.dart';
 import 'package:bidir_debter/pages/signup_page.dart';
 import 'package:bidir_debter/pages/login_page.dart';
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new SignupPage()));
     }
     else if(_seen == 2) {
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new HomePage()));
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new Template()));
     }
     else if(_seen == 3) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new LoginPage()));

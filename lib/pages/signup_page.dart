@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:bidir_debter/animation/fade_animation.dart';
-import 'home_page.dart';
+import 'package:bidir_debter/template.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -154,7 +154,7 @@ class _SignupPageState extends State<SignupPage> {
                               await prefs.setInt('seen', 2);
                               Navigator.of(context).pushReplacement(
                                   new MaterialPageRoute(
-                                      builder: (context) => new HomePage()));
+                                      builder: (context) => new Template()));
                             }
                           },
                         )),

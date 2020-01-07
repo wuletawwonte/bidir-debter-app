@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
-import 'home_page.dart';
+import 'package:bidir_debter/template.dart';
 
 class AddPerson extends StatefulWidget {
   @override
@@ -110,7 +110,7 @@ class _AddPersonState extends State<AddPerson> {
                         _lastNameController.text, _colors[0]);
                     dbHelper.save(person);
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                        builder: (context) => new HomePage()));
+                        builder: (context) => new Template()));
                   }
                 },
                 child: Text('Add Person'),

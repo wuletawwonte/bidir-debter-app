@@ -1,43 +1,33 @@
+import 'package:bidir_debter/pages/add_person.dart';
+import 'package:bidir_debter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-// import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:bidir_debter/sqflite/person.dart';
-import 'package:bidir_debter/sqflite/db_helper.dart';
-// import 'add_person.dart';
 import 'package:bidir_debter/pages/login_page.dart';
 
-class HomePage extends StatefulWidget {
+class Template extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _TemplateState createState() => _TemplateState();
 }
 
-class _HomePageState extends State<HomePage> {
-  Future<List<Person>> persons;
+class _TemplateState extends State<Template> {
   final _searchFieldController = TextEditingController();
-  var dbHelper;
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    HomePage(),
+    HomePage(),
+    AddPerson(),
+    HomePage(),
+  ];
 
   List<TabItem> items = <TabItem>[
     TabItem(icon: Icons.home, title: 'Home'),
     TabItem(icon: Icons.data_usage, title: 'Orange'),
-    TabItem(icon: Icons.date_range, title: 'Callendar'),
+    TabItem(icon: Icons.add, title: 'Add Person'),
     TabItem(icon: Icons.supervised_user_circle, title: 'Users'),
-    TabItem(icon: Icons.swap_calls, title: 'Zigzag'),
+    TabItem(icon: Icons.menu, title: 'More'),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    dbHelper = new DBHelper();
-  }
-
-  Future<List<Person>> getPersons() {
-    setState(() {
-      persons = dbHelper.getPersons();
-    });
-    return persons;
-  }
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -136,67 +126,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
 
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverFillRemaining(
-                child: FutureBuilder(
-                    future: getPersons(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(child: Text("No Record Found"));
-                      } else {
-                        return RefreshIndicator(
-                          onRefresh: () {
-                            return getPersons();
-                          },
-                          child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  onLongPress: () {},
-                                  onTap: () {},
-                                  leading: CircleAvatar(
-                                      backgroundColor: Color(
-                                          snapshot.data[index].profileColor),
-                                      child: Text(
-                                        snapshot.data[index].firstName[0]
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                  title: Text(snapshot.data[index].firstName),
-                                  subtitle: Text(snapshot.data[index].lastName),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      dbHelper.delete(snapshot.data[index].id);
-                                    },
-                                  ),
-                                );
-                              }),
-                        );
-                      }
-                    }))
-          ],
-        ),
-        // floatingActionButton: FloatingActionButton(
-        //   tooltip: 'Add Person',
-        //   child: Icon(Icons.add),
-        //   onPressed: () {
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => AddPerson()));
-        //   },
-        // ),
+        body: _children[_currentIndex],
         bottomNavigationBar: ConvexAppBar.builder(
           count: items.length,
           backgroundColor: Colors.white,
-          style: TabStyle.fixed,
+          onTap: onTabTapped,
+          style: TabStyle.custom,
           builder: _CustomTabsBuilder(items),
         ),
       ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }
 
@@ -208,26 +153,30 @@ class _CustomTabsBuilder extends DelegateBuilder {
   @override
   Widget build(BuildContext context, int index, bool active) {
     var navigationItem = items[index];
-    // var _color = active ? Colors.purple : Colors.white60;
-    // var _color2 = active ? Colors.white : Colors.black;
+    var _color = active ? Colors.purple : Colors.white60;
+    var _color2 = active ? Colors.white : Colors.black;
 
-    // if (index == items.length ~/ 2) {
-    //   return Stack(
-    //     alignment: Alignment.center,
-    //     children: <Widget>[
-    //       SizedBox(
-    //         width: 60,
-    //         height: 60,
-    //         child: Container(
-    //             decoration: BoxDecoration(
-    //               shape: BoxShape.circle,
-    //               color: _color,
-    //             ),
-    //             child: Icon(Icons.add, size: 40, color: _color2)),
-    //       )
-    //     ],
-    //   );
-    // }
+    if (index == items.length ~/ 2) {
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: Column(
+              children: <Widget>[
+                Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _color,
+                    ),
+                    child: Icon(Icons.add, size: 50, color: _color2)),
+              ],
+            ),
+          )
+        ],
+      );
+    }
 
     var _icon = active
         ? navigationItem.activeIcon ?? navigationItem.icon

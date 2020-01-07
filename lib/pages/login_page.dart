@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:bidir_debter/animation/fade_animation.dart';
-import 'home_page.dart';
+import 'package:bidir_debter/template.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await prefs.setInt('seen', 2);
                                 Navigator.of(context).pushReplacement(
                                   new MaterialPageRoute(
-                                      builder: (context) => new HomePage()));
+                                      builder: (context) => new Template()));
                               }
                               return "Username or Password Not Correct";
                             }
