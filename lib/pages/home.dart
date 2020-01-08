@@ -71,7 +71,11 @@ class _HomePageState extends State<HomePage> {
             height: 48,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [Colors.purple, Colors.white]
+                ),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 0.5,
@@ -80,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                 ]),
             child: Stack(alignment: Alignment.centerRight, children: <Widget>[
               Container(
-                padding: EdgeInsets.only(right: 50),
+                padding: EdgeInsets.only(right: 50, left: 15),
                 child: TextField(
                   textCapitalization: TextCapitalization.words,
                   controller: _searchFieldController,
@@ -91,10 +95,10 @@ class _HomePageState extends State<HomePage> {
                       labelStyle: TextStyle(fontSize: 20),
                       hoverColor: Colors.deepPurple,
                       fillColor: Colors.purple,
-                      prefixIcon: Icon(
-                        Icons.menu,
-                        size: 20,
-                      ),
+                      // prefixIcon: Icon(
+                      //   Icons.menu,
+                      //   size: 20,
+                      // ),
                       labelText: 'Bidir Debter',
                       hasFloatingPlaceholder: false,
                       isDense: true,

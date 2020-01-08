@@ -21,8 +21,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                "Save",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                "SAVE",
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               onPressed: () {},
             )
@@ -178,9 +178,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fontWeight: FontWeight.bold
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              ;
-                            }),
+                            ..onTap = () {}),
                     ),
                   ],
                 )

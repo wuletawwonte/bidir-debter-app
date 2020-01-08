@@ -12,6 +12,10 @@ class _AddPersonState extends State<AddPerson> {
   final key = GlobalKey<FormState>();
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _notesController = TextEditingController();
+
 
   var dbHelper;
 
@@ -30,8 +34,8 @@ class _AddPersonState extends State<AddPerson> {
         actions: <Widget>[
           FlatButton(
             child: Text(
-              "Save",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              "SAVE",
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             onPressed: () {
               if (key.currentState.validate()) {
@@ -92,39 +96,27 @@ class _AddPersonState extends State<AddPerson> {
           ];
         },
         body: Container(
-          padding: EdgeInsets.all(30),
+          padding: EdgeInsets.only(top: 10, right: 25),
           child: Form(
             key: key,
             child: Column(
               children: <Widget>[
-                // Container(
-                //   child: Center(
-                //     child: Container(
-                //       width: 90,
-                //       height: 90,
-                //       decoration: BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           border: Border.all(
-                //               color: Colors.grey, style: BorderStyle.solid)),
-                //       child: Icon(
-                //         Icons.camera_alt,
-                //         size: 80,
-                //         color: Colors.grey[400],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
                 Row(
                   children: <Widget>[
+                    SizedBox(
+                      width: 60,
+                      child: Icon(
+                        Icons.person_outline,
+                        color: Colors.deepPurple,
+                      ),
+                    ),
                     Expanded(
                       child: TextFormField(
                         textCapitalization: TextCapitalization.words,
                         controller: _firstNameController,
                         enableInteractiveSelection: false,
                         keyboardType: TextInputType.text,
+                        expands: false,
                         decoration: InputDecoration(
                           isDense: true,
                           fillColor: Colors.black,
@@ -139,8 +131,12 @@ class _AddPersonState extends State<AddPerson> {
                         },
                       ),
                     ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
                     SizedBox(
-                      width: 10,
+                      width: 60,
                     ),
                     Expanded(
                       child: TextFormField(
@@ -151,7 +147,6 @@ class _AddPersonState extends State<AddPerson> {
                         decoration: InputDecoration(
                           isDense: true,
                           fillColor: Colors.black,
-                          // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                           labelText: "Last Name",
                         ),
                         validator: (value) {
@@ -164,26 +159,77 @@ class _AddPersonState extends State<AddPerson> {
                     ),
                   ],
                 ),
-                TextFormField(
-                  textCapitalization: TextCapitalization.words,
-                  controller: _lastNameController,
-                  enableInteractiveSelection: false,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    fillColor: Colors.black,
-                    // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                    labelText: "Email",
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter a valid Name.';
-                    }
-                    return null;
-                  },
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 60,
+                      child: Icon(Icons.phone, color: Colors.deepPurple),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        controller: _phoneController,
+                        enableInteractiveSelection: false,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          fillColor: Colors.black,
+                          labelText: "Phone",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 60,
+                      child: Icon(Icons.email, color: Colors.deepPurple),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        controller: _emailController,
+                        enableInteractiveSelection: false,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          fillColor: Colors.black,
+                          labelText: "Email",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 60,
+                      child: Icon(Icons.speaker_notes, color: Colors.deepPurple),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        controller: _notesController,
+                        enableInteractiveSelection: false,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          fillColor: Colors.black,
+                          labelText: "Note",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
