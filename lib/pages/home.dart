@@ -92,14 +92,10 @@ class _HomePageState extends State<HomePage> {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      labelStyle: TextStyle(fontSize: 20),
+                      labelStyle: TextStyle(fontSize: 16),
                       hoverColor: Colors.deepPurple,
                       fillColor: Colors.purple,
-                      // prefixIcon: Icon(
-                      //   Icons.menu,
-                      //   size: 20,
-                      // ),
-                      labelText: 'Bidir Debter',
+                      labelText: 'Yebidir Debter',
                       hasFloatingPlaceholder: false,
                       isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(0, 19, 50, 18.8)),
@@ -145,9 +141,9 @@ class _HomePageState extends State<HomePage> {
                                     title: Text(snapshot.data[index].firstName),
                                     subtitle: Text(snapshot.data[index].lastName),
                                     trailing: IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: Icon(Icons.chevron_right),
                                       onPressed: () {
-                                        dbHelper.delete(snapshot.data[index].id);
+                                        // dbHelper.delete(snapshot.data[index].id);
                                       },
                                     ),
                                   );
