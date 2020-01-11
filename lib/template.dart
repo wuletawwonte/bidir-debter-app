@@ -2,7 +2,6 @@ import 'package:bidir_debter/pages/add_person.dart';
 import 'package:bidir_debter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class Template extends StatefulWidget {
   @override
@@ -11,20 +10,8 @@ class Template extends StatefulWidget {
 
 class _TemplateState extends State<Template> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    HomePage(),
-    HomePage(),
-    AddPerson(),
-    HomePage(),
-  ];
-
-  List<TabItem> items = <TabItem>[
-    TabItem(icon: Icons.home, title: 'Home'),
-    TabItem(icon: Icons.data_usage, title: 'Orange'),
-    TabItem(icon: Icons.add, title: 'Add Person'),
-    TabItem(icon: Icons.supervised_user_circle, title: 'Users'),
-    TabItem(icon: Icons.menu, title: 'More'),
-  ];
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentPage = HomePage();
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -52,13 +39,141 @@ class _TemplateState extends State<Template> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.grey[100],
-        body: _children[_currentIndex],
-        bottomNavigationBar: ConvexAppBar.builder(
-          count: items.length,
-          backgroundColor: Colors.white,
-          onTap: onTabTapped,
-          style: TabStyle.custom,
-          builder: _CustomTabsBuilder(items),
+        body: PageStorage(
+          child: currentPage,
+          bucket: bucket,
+        ),
+        floatingActionButton: FloatingActionButton(
+          // mini: true,
+          onPressed: (){
+            setState(() {
+              currentPage = AddPerson();
+              _currentIndex = 4;
+            });
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.orange,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          notchMargin: 10,
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget> [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentPage = HomePage();
+                          _currentIndex = 0;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.home,
+                            color: _currentIndex == 0 ? Colors.purple : Colors.black12,
+                          ),
+                          Text(
+                            'Home',
+                            style: TextStyle(
+                              color: _currentIndex == 0 ? Colors.purple : Colors.black12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentPage = HomePage();
+                          _currentIndex = 1;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.data_usage,
+                            color: _currentIndex == 1 ? Colors.purple : Colors.black12,
+                          ),
+                          Text(
+                            'Orange',
+                            style: TextStyle(
+                              color: _currentIndex == 1 ? Colors.purple : Colors.black12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentPage = HomePage();
+                          _currentIndex = 2;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.supervised_user_circle,
+                            color: _currentIndex == 2 ? Colors.purple : Colors.black12,
+                          ),
+                          Text(
+                            'Users',
+                            style: TextStyle(
+                              color: _currentIndex == 2 ? Colors.purple : Colors.black12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: (){
+                        setState(() {
+                          currentPage = HomePage();
+                          _currentIndex = 3;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.menu,
+                            color: _currentIndex == 3 ? Colors.purple : Colors.black12,
+                          ),
+                          Text(
+                            'More',
+                            style: TextStyle(
+                              color: _currentIndex == 3 ? Colors.purple : Colors.black12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
+                ),
+              ]
+            ),
+          ),
+          shape: CircularNotchedRectangle(),
         ),
       ),
     );
@@ -71,56 +186,3 @@ class _TemplateState extends State<Template> {
   }
 }
 
-class _CustomTabsBuilder extends DelegateBuilder {
-  final List<TabItem> items;
-
-  _CustomTabsBuilder(this.items);
-
-  @override
-  Widget build(BuildContext context, int index, bool active) {
-    var navigationItem = items[index];
-    var _color = active ? Colors.orange : Colors.white60;
-    var _color2 = active ? Colors.white : Colors.black;
-
-    if (index == items.length ~/ 2) {
-      return Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: 60,
-            height: 60,
-            child: Column(
-              children: <Widget>[
-                Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _color,
-                    ),
-                    child: Icon(Icons.add, size: 50, color: _color2)),
-              ],
-            ),
-          )
-        ],
-      );
-    }
-
-    var _icon = active
-        ? navigationItem.activeIcon ?? navigationItem.icon
-        : navigationItem.icon;
-
-    return Container(
-      color: Colors.transparent,
-      padding: EdgeInsets.only(bottom: 5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Icon(_icon, color: Colors.black87),
-          Text(
-            navigationItem.title,
-            style: TextStyle(color: Colors.black87),
-          )
-        ],
-      ),
-    );
-  }
-}
