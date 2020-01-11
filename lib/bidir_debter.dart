@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   ));
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Bidir Debter',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,

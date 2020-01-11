@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
+import 'package:contact_picker/contact_picker.dart';
 import 'package:bidir_debter/template.dart';
 
 class AddPerson extends StatefulWidget {
@@ -16,7 +17,8 @@ class _AddPersonState extends State<AddPerson> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
 
-
+  Contact _contact;
+  ContactPicker _contactPicker = new ContactPicker();
   var dbHelper;
 
   @override
@@ -120,8 +122,7 @@ class _AddPersonState extends State<AddPerson> {
                         decoration: InputDecoration(
                           isDense: true,
                           fillColor: Colors.black,
-                          // contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                          labelText: "First Name",
+                          labelText: _contact == null ? "First Name" : _contact.toString(),
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
@@ -129,6 +130,19 @@ class _AddPersonState extends State<AddPerson> {
                           }
                           return null;
                         },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 60,
+                      child: IconButton(
+                        icon: Icon(Icons.contacts, color: Colors.blue),
+                        onPressed: () async {
+                              Contact contact = await _contactPicker.selectContact();
+                              print(contact.toString());                              
+                              setState((){
+                                _contact = contact;
+                              });                              
+                            },
                       ),
                     ),
                   ],
