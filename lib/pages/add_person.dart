@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
-import 'package:contact_picker/contact_picker.dart';
+// import 'package:contact_picker/contact_picker.dart';
+
 import 'package:bidir_debter/template.dart';
 
 class AddPerson extends StatefulWidget {
@@ -17,8 +18,8 @@ class _AddPersonState extends State<AddPerson> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
 
-  Contact _contact;
-  ContactPicker _contactPicker = new ContactPicker();
+  // Contact _contact;
+  // ContactPicker _contactPicker = new ContactPicker();
   var dbHelper;
 
   @override
@@ -26,6 +27,14 @@ class _AddPersonState extends State<AddPerson> {
     super.initState();
     dbHelper = new DBHelper();
   }
+
+  // void _getContact() async {
+  //   Contact contact = await _contactPicker.selectContact();
+  //   print(contact.toString());
+  //   this.setState(() {
+  //     _contact = contact;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +131,10 @@ class _AddPersonState extends State<AddPerson> {
                         decoration: InputDecoration(
                           isDense: true,
                           fillColor: Colors.black,
-                          labelText: _contact == null ? "First Name" : _contact.toString(),
+                          labelText: "First Name",
+                          // labelText: _contact == null
+                          //     ? "First Name"
+                          //     : _contact.toString(),
                         ),
                         validator: (value) {
                           if (value.isEmpty) {
@@ -136,13 +148,8 @@ class _AddPersonState extends State<AddPerson> {
                       width: 60,
                       child: IconButton(
                         icon: Icon(Icons.contacts, color: Colors.blue),
-                        onPressed: () async {
-                              Contact contact = await _contactPicker.selectContact();
-                              print(contact.toString());                              
-                              setState((){
-                                _contact = contact;
-                              });                              
-                            },
+                        onPressed: (){}, 
+                        // _getContact,                        
                       ),
                     ),
                   ],
@@ -228,7 +235,8 @@ class _AddPersonState extends State<AddPerson> {
                   children: <Widget>[
                     SizedBox(
                       width: 60,
-                      child: Icon(Icons.speaker_notes, color: Colors.deepPurple),
+                      child:
+                          Icon(Icons.speaker_notes, color: Colors.deepPurple),
                     ),
                     Expanded(
                       child: TextFormField(

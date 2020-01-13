@@ -18,7 +18,7 @@ class _TemplateState extends State<Template> {
             context: context,
             builder: (context) => new AlertDialog(
                   title: new Text('Are you sure?'),
-                  content: Text('Do you want to exit an app?'),
+                  content: Text('Do you want to exit the app?'),
                   actions: <Widget>[
                     new FlatButton(
                       onPressed: () => Navigator.of(context).pop(false),
@@ -34,40 +34,41 @@ class _TemplateState extends State<Template> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: Colors.grey[100],
-        body: PageStorage(
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.grey[100],
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: PageStorage(
           child: currentPage,
           bucket: bucket,
         ),
-        floatingActionButton: FloatingActionButton(
-          // mini: true,
-          onPressed: (){
-            setState(() {
-              currentPage = AddPerson();
-              _currentIndex = 4;
-            });
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.orange,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          notchMargin: 10,
-          child: Container(
-            height: 60,
-            child: Row(
+      ),
+      floatingActionButton: FloatingActionButton(
+        // mini: true,
+        onPressed: () {
+          setState(() {
+            currentPage = AddPerson();
+            _currentIndex = 4;
+          });
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        notchMargin: 10,
+        child: Container(
+          height: 60,
+          child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget> [
+              children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           currentPage = HomePage();
                           _currentIndex = 0;
@@ -78,12 +79,16 @@ class _TemplateState extends State<Template> {
                         children: <Widget>[
                           Icon(
                             Icons.home,
-                            color: _currentIndex == 0 ? Colors.purple : Colors.black12,
+                            color: _currentIndex == 0
+                                ? Colors.purple
+                                : Colors.black26,
                           ),
                           Text(
                             'Home',
                             style: TextStyle(
-                              color: _currentIndex == 0 ? Colors.purple : Colors.black12,
+                              color: _currentIndex == 0
+                                  ? Colors.purple
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -91,7 +96,7 @@ class _TemplateState extends State<Template> {
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           currentPage = HomePage();
                           _currentIndex = 1;
@@ -102,26 +107,29 @@ class _TemplateState extends State<Template> {
                         children: <Widget>[
                           Icon(
                             Icons.data_usage,
-                            color: _currentIndex == 1 ? Colors.purple : Colors.black12,
+                            color: _currentIndex == 1
+                                ? Colors.purple
+                                : Colors.black26,
                           ),
                           Text(
                             'Orange',
                             style: TextStyle(
-                              color: _currentIndex == 1 ? Colors.purple : Colors.black12,
+                              color: _currentIndex == 1
+                                  ? Colors.purple
+                                  : Colors.black26,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ],
-
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           currentPage = HomePage();
                           _currentIndex = 2;
@@ -132,12 +140,16 @@ class _TemplateState extends State<Template> {
                         children: <Widget>[
                           Icon(
                             Icons.supervised_user_circle,
-                            color: _currentIndex == 2 ? Colors.purple : Colors.black12,
+                            color: _currentIndex == 2
+                                ? Colors.purple
+                                : Colors.black26,
                           ),
                           Text(
                             'Users',
                             style: TextStyle(
-                              color: _currentIndex == 2 ? Colors.purple : Colors.black12,
+                              color: _currentIndex == 2
+                                  ? Colors.purple
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -145,7 +157,7 @@ class _TemplateState extends State<Template> {
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: (){
+                      onPressed: () {
                         setState(() {
                           currentPage = HomePage();
                           _currentIndex = 3;
@@ -156,25 +168,26 @@ class _TemplateState extends State<Template> {
                         children: <Widget>[
                           Icon(
                             Icons.menu,
-                            color: _currentIndex == 3 ? Colors.purple : Colors.black12,
+                            color: _currentIndex == 3
+                                ? Colors.purple
+                                : Colors.black26,
                           ),
                           Text(
                             'More',
                             style: TextStyle(
-                              color: _currentIndex == 3 ? Colors.purple : Colors.black12,
+                              color: _currentIndex == 3
+                                  ? Colors.purple
+                                  : Colors.black26,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ],
-
                 ),
-              ]
-            ),
-          ),
-          shape: CircularNotchedRectangle(),
+              ]),
         ),
+        shape: CircularNotchedRectangle(),
       ),
     );
   }
@@ -185,4 +198,3 @@ class _TemplateState extends State<Template> {
     });
   }
 }
-
