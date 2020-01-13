@@ -1,5 +1,6 @@
 import 'package:bidir_debter/pages/add_person.dart';
 import 'package:bidir_debter/pages/home.dart';
+import 'package:bidir_debter/pages/persons.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -131,7 +132,7 @@ class _TemplateState extends State<Template> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentPage = HomePage();
+                          currentPage = Persons();
                           _currentIndex = 2;
                         });
                       },
@@ -145,7 +146,7 @@ class _TemplateState extends State<Template> {
                                 : Colors.black26,
                           ),
                           Text(
-                            'Users',
+                            'Persons',
                             style: TextStyle(
                               color: _currentIndex == 2
                                   ? Colors.purple

@@ -104,6 +104,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Container(
+        height: 100,
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.grey[300]))),
         child: CustomScrollView(
           slivers: <Widget>[
             SliverFillRemaining(
@@ -118,38 +121,43 @@ class _HomePageState extends State<HomePage> {
                             return getPersons();
                           },
                           child: ListView.builder(
+                              padding: EdgeInsets.only(left: 10),
+                              scrollDirection: Axis.horizontal,
                               physics: AlwaysScrollableScrollPhysics(),
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
                                 return AnimationConfiguration.staggeredList(
                                   position: index,
                                   child: SlideAnimation(
-                                    verticalOffset: 50,
+                                    horizontalOffset: 50,
                                     child: FadeInAnimation(
-                                      child: ListTile(
-                                        onLongPress: () {},
-                                        onTap: () {},
-                                        leading: CircleAvatar(
-                                            backgroundColor: Color(snapshot
-                                                .data[index].profileColor),
-                                            child: Text(
-                                              snapshot.data[index].firstName[0]
-                                                  .toUpperCase(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                            )),
-                                        title: Text(
-                                            snapshot.data[index].firstName),
-                                        subtitle:
-                                            Text(snapshot.data[index].lastName),
-                                        trailing: IconButton(
-                                          icon: Icon(Icons.chevron_right),
-                                          onPressed: () {
-                                            // dbHelper.delete(snapshot.data[index].id);
-                                          },
+                                      child: Column(children: <Widget>[
+                                        SizedBox(
+                                          height: 15,
                                         ),
-                                      ),
+                                        Container(
+                                          width: 80,
+                                          child: CircleAvatar(
+                                              maxRadius: 23,
+                                              backgroundColor: Color(snapshot
+                                                  .data[index].profileColor),
+                                              child: Text(
+                                                snapshot
+                                                    .data[index].firstName[0]
+                                                    .toUpperCase(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              )),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          snapshot.data[index].firstName,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ]),
                                     ),
                                   ),
                                 );
