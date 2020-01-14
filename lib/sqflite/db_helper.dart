@@ -51,8 +51,10 @@ class DBHelper {
       for(int i = 0; i < maps.length; i++){
         persons.add(Person.fromMap(maps[i]));
       }
+      return persons;
+    } else {
+      return null;
     }
-    return persons;
   }
 
   Future<int> delete(int id) async{

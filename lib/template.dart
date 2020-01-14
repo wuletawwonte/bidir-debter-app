@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:bidir_debter/pages/add_person.dart';
 import 'package:bidir_debter/pages/home.dart';
 import 'package:bidir_debter/pages/persons.dart';
-import 'package:flutter/material.dart';
-import 'dart:async';
 
 class Template extends StatefulWidget {
   @override
@@ -32,6 +32,7 @@ class _TemplateState extends State<Template> {
                 ))) ??
         false;
   }
+
 
   @override
   Widget build(BuildContext context) {
