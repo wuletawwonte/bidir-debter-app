@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        mini: true,
+        // mini: true,
         onPressed: () {
           Navigator.of(context).push(
               new MaterialPageRoute(builder: (context) => new AddPerson()));

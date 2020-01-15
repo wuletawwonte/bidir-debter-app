@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await prefs.setInt('seen', 2);
                                 Navigator.of(context).pushReplacement(
                                   new MaterialPageRoute(
-                                      builder: (context) => new Template()));
+                                      builder: (context) => new Template(0)));
                               }
                               return "Username or Password Not Correct";
                             }

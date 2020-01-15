@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new SignupPage()));
     }
     else if(_seen == 2) {
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new Template()));
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new Template(0)));
     }
     else if(_seen == 3) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new LoginPage()));
