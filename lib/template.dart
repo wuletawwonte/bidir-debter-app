@@ -14,8 +14,7 @@ class Template extends StatefulWidget {
   _TemplateState createState() => _TemplateState();
 }
 
-class _TemplateState extends State<Template>
-    with SingleTickerProviderStateMixin {
+class _TemplateState extends State<Template> {
   int _currentIndex = 0;
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentPage = HomePage();
@@ -66,7 +65,6 @@ class _TemplateState extends State<Template>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
       backgroundColor: Colors.grey[100],
       body: WillPopScope(
         onWillPop: _onWillPop,
