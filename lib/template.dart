@@ -1,15 +1,18 @@
+import 'package:bidir_debter/pages/persons.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:bidir_debter/pages/add_person.dart';
+// import 'package:bidir_debter/pages/add_person.dart';
 import 'package:bidir_debter/pages/home.dart';
-import 'package:bidir_debter/pages/persons.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+// import 'package:bidir_debter/pages/persons.dart';
 
 class Template extends StatefulWidget {
   @override
   _TemplateState createState() => _TemplateState();
 }
 
-class _TemplateState extends State<Template> {
+class _TemplateState extends State<Template>
+    with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentPage = HomePage();
@@ -33,7 +36,6 @@ class _TemplateState extends State<Template> {
         false;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,151 +48,225 @@ class _TemplateState extends State<Template> {
           bucket: bucket,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        // mini: true,
-        onPressed: () {
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: BubbleBottomBar(
+        opacity: .2,
+        currentIndex: _currentIndex,
+        onTap: (index) {
           setState(() {
-            currentPage = AddPerson();
-            _currentIndex = 4;
+            _currentIndex = index;
           });
+          if (index == 0) {
+            setState(() {
+              currentPage = HomePage();
+            });
+          } else if (index == 1) {
+            setState(() {
+              currentPage = Persons();
+            });
+          } else if (index == 2) {
+            setState(() {
+              currentPage = HomePage();
+            });
+          }
         },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.orange,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        elevation: 8,
+        fabLocation: BubbleBottomBarFabLocation.end, //new
+        hasNotch: true, //new
+        hasInk: true, //new, gives a cute ink effect
+        inkColor: Colors.black12, //optional, uses theme color if not specified
+        items: <BubbleBottomBarItem>[
+          BubbleBottomBarItem(
+              backgroundColor: Colors.purple,
+              icon: Icon(
+                Icons.dashboard,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.dashboard,
+                color: Colors.purple,
+              ),
+              title: Text("Home")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.purple,
+              icon: Icon(
+                Icons.supervised_user_circle,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.supervised_user_circle,
+                color: Colors.purple,
+              ),
+              title: Text("Persons")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.purple,
+              icon: Icon(
+                Icons.tune,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.tune,
+                color: Colors.purple,
+              ),
+              title: Text("Settings"))
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 10,
-        child: Container(
-          height: 60,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = HomePage();
-                          _currentIndex = 0;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.home,
-                            color: _currentIndex == 0
-                                ? Colors.purple
-                                : Colors.black26,
-                          ),
-                          Text(
-                            'Home',
-                            style: TextStyle(
-                              color: _currentIndex == 0
-                                  ? Colors.purple
-                                  : Colors.black26,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = HomePage();
-                          _currentIndex = 1;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.data_usage,
-                            color: _currentIndex == 1
-                                ? Colors.purple
-                                : Colors.black26,
-                          ),
-                          Text(
-                            'Orange',
-                            style: TextStyle(
-                              color: _currentIndex == 1
-                                  ? Colors.purple
-                                  : Colors.black26,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = Persons();
-                          _currentIndex = 2;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.supervised_user_circle,
-                            color: _currentIndex == 2
-                                ? Colors.purple
-                                : Colors.black26,
-                          ),
-                          Text(
-                            'Persons',
-                            style: TextStyle(
-                              color: _currentIndex == 2
-                                  ? Colors.purple
-                                  : Colors.black26,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = HomePage();
-                          _currentIndex = 3;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.menu,
-                            color: _currentIndex == 3
-                                ? Colors.purple
-                                : Colors.black26,
-                          ),
-                          Text(
-                            'More',
-                            style: TextStyle(
-                              color: _currentIndex == 3
-                                  ? Colors.purple
-                                  : Colors.black26,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ]),
-        ),
-        shape: CircularNotchedRectangle(),
-      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: _animateColor.value,
+      //   onPressed: animate,
+      //   tooltip: 'Toggle',
+      //   child: AnimatedIcon(
+      //     icon: AnimatedIcons.add_event,
+      //     progress: _animateIcon,
+      //   ),
+      // ),
+      // // floatingActionButton: FloatingActionButton(
+      // //   // mini: true,
+      // //   onPressed: () {
+      // //     setState(() {
+      // //       currentPage = AddPerson();
+      // //       // _currentIndex = 5;
+      // //     });
+      // //   },
+      // //   child: Icon(Icons.add),
+      // //   backgroundColor: Colors.orange,
+      // // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // bottomNavigationBar: BottomAppBar(
+      //   notchMargin: 10,
+      //   child: Container(
+      //     height: 60,
+      //     child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: <Widget>[
+      //           Row(
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: <Widget>[
+      //               MaterialButton(
+      //                 minWidth: 40,
+      //                 onPressed: () {
+      //                   setState(() {
+      //                     currentPage = HomePage();
+      //                     _currentIndex = 0;
+      //                   });
+      //                 },
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: <Widget>[
+      //                     Icon(
+      //                       Icons.home,
+      //                       color: _currentIndex == 0
+      //                           ? Colors.purple
+      //                           : Colors.black26,
+      //                     ),
+      //                     Text(
+      //                       'Home',
+      //                       style: TextStyle(
+      //                         color: _currentIndex == 0
+      //                             ? Colors.purple
+      //                             : Colors.black26,
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //               MaterialButton(
+      //                 minWidth: 40,
+      //                 onPressed: () {
+      //                   setState(() {
+      //                     currentPage = HomePage();
+      //                     _currentIndex = 1;
+      //                   });
+      //                 },
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: <Widget>[
+      //                     Icon(
+      //                       Icons.data_usage,
+      //                       color: _currentIndex == 1
+      //                           ? Colors.purple
+      //                           : Colors.black26,
+      //                     ),
+      //                     Text(
+      //                       'Orange',
+      //                       style: TextStyle(
+      //                         color: _currentIndex == 1
+      //                             ? Colors.purple
+      //                             : Colors.black26,
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //           Row(
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: <Widget>[
+      //               MaterialButton(
+      //                 minWidth: 40,
+      //                 onPressed: () {
+      //                   setState(() {
+      //                     currentPage = Persons();
+      //                     _currentIndex = 2;
+      //                   });
+      //                 },
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: <Widget>[
+      //                     Icon(
+      //                       Icons.supervised_user_circle,
+      //                       color: _currentIndex == 2
+      //                           ? Colors.purple
+      //                           : Colors.black26,
+      //                     ),
+      //                     Text(
+      //                       'Persons',
+      //                       style: TextStyle(
+      //                         color: _currentIndex == 2
+      //                             ? Colors.purple
+      //                             : Colors.black26,
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //               MaterialButton(
+      //                 minWidth: 40,
+      //                 onPressed: () {
+      //                   setState(() {
+      //                     currentPage = HomePage();
+      //                     _currentIndex = 3;
+      //                   });
+      //                 },
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: <Widget>[
+      //                     Icon(
+      //                       Icons.menu,
+      //                       color: _currentIndex == 3
+      //                           ? Colors.purple
+      //                           : Colors.black26,
+      //                     ),
+      //                     Text(
+      //                       'More',
+      //                       style: TextStyle(
+      //                         color: _currentIndex == 3
+      //                             ? Colors.purple
+      //                             : Colors.black26,
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ]),
+      //   ),
+      //   shape: CircularNotchedRectangle(),
+      // ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bidir_debter/pages/login_page.dart';
+import 'package:bidir_debter/pages/add_person.dart';
 import 'package:bidir_debter/pages/edit_profile.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -126,6 +127,16 @@ class _PersonsState extends State<Persons> {
           ],
         ),
       ),
+          floatingActionButton: FloatingActionButton(
+        // mini: true,
+        onPressed: () {
+          Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) => new AddPerson()));
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.purple,
+      ),
+
     );
   }
 }

@@ -1,9 +1,11 @@
+import 'package:bidir_debter/pages/add_person.dart';
 import 'package:flutter/material.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bidir_debter/pages/login_page.dart';
 import 'package:bidir_debter/pages/edit_profile.dart';
+import 'package:bidir_debter/pages/test.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,7 +39,8 @@ class _HomePageState extends State<HomePage> {
           Navigator.of(context).push(new MaterialPageRoute(
               builder: (context) => new EditProfilePage()));
         } else if (value == 'settings') {
-          print('Settings');
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (context) => new FancyFab()));
         } else if (value == 'signout') {
           final prefs = await SharedPreferences.getInstance();
           prefs.setInt('seen', 3);
@@ -168,6 +171,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        mini: true,
+        onPressed: () {
+          Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) => new AddPerson()));
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
+      ),
+
     );
   }
 }

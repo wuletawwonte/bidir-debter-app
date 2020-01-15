@@ -18,8 +18,6 @@ class _AddPersonState extends State<AddPerson> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
 
-  // Contact _contact;
-  // ContactPicker _contactPicker = new ContactPicker();
   var dbHelper;
 
   @override
@@ -27,14 +25,6 @@ class _AddPersonState extends State<AddPerson> {
     super.initState();
     dbHelper = new DBHelper();
   }
-
-  // void _getContact() async {
-  //   Contact contact = await _contactPicker.selectContact();
-  //   print(contact.toString());
-  //   this.setState(() {
-  //     _contact = contact;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +67,7 @@ class _AddPersonState extends State<AddPerson> {
         headerSliverBuilder: (context, boxScrolled) {
           return <Widget>[
             SliverAppBar(
+              leading: new Container(),
               backgroundColor: Colors.grey,
               expandedHeight: 200,
               floating: false,
