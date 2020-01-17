@@ -52,9 +52,11 @@ class _AddPersonState extends State<AddPerson> {
 
                 Person person = Person(null, _firstNameController.text,
                     _lastNameController.text, _colors[0]);
-                dbHelper.save(person);
-                Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                    builder: (context) => new Template(1)));
+                dbHelper.savePerson(person);
+                
+                Navigator.of(context).pushReplacement(
+                                  new MaterialPageRoute(
+                                      builder: (context) => new Template(1)));
               }
             },
           )
@@ -79,13 +81,6 @@ class _AddPersonState extends State<AddPerson> {
                 )
               ],
               flexibleSpace: FlexibleSpaceBar(
-                // centerTitle: true,
-                // title: Text("Add Person",
-                //   style: TextStyle(
-                //     color: Colors.white70,
-                //     // fontSize: 15
-                //   ),
-                // ),
                 background: Icon(
                   Icons.person_outline,
                   size: 220,

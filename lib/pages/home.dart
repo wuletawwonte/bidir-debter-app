@@ -1,4 +1,4 @@
-import 'package:bidir_debter/pages/add_person.dart';
+import 'package:bidir_debter/pages/register_tenant.dart';
 import 'package:flutter/material.dart';
 import 'package:bidir_debter/sqflite/person.dart';
 import 'package:bidir_debter/sqflite/db_helper.dart';
@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         brightness: Brightness.light,
+        automaticallyImplyLeading: false,
         title: Container(
           height: 48,
           decoration: BoxDecoration(
@@ -140,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         Container(
                                           width: 80,
-                                          child: CircleAvatar(
+                                          child: CircleAvatar(                                                                                          
                                               maxRadius: 23,
                                               backgroundColor: Color(snapshot
                                                   .data[index].profileColor),
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
         // mini: true,
         onPressed: () {
           Navigator.of(context).push(
-              new MaterialPageRoute(builder: (context) => new AddPerson()));
+              new MaterialPageRoute(builder: (context) => new RegisterTenant()));
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.orange,

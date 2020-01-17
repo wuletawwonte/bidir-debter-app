@@ -9,7 +9,7 @@ class Person  {
   
   Map<String, dynamic> toMap() {
     var map = <String, dynamic> {
-      'id': id,
+      'person_id': id,
       'first_name': firstName,
       'last_name': lastName,
       'profile_color': profileColor
@@ -19,7 +19,7 @@ class Person  {
   }
 
   Person.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
+    id = map['person_id'];
     firstName = map['first_name'];
     lastName = map['last_name'];
     profileColor = map['profile_color'];

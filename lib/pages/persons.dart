@@ -62,7 +62,8 @@ class _PersonsState extends State<Persons> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(                
-        title: Text("Persons"),
+        title: Text("Persons"),        
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
